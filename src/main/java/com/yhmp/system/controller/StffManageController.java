@@ -1,7 +1,9 @@
 package com.yhmp.system.controller;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yhmp.common.exception.ServiceException;
 import com.yhmp.common.web.JsonResult;
-import com.yhmp.project.entity.PorjectDeclare;
 import com.yhmp.system.entity.User;
 import com.yhmp.system.service.UserServer;
 /**
@@ -65,9 +67,11 @@ public class StffManageController {
 		System.out.println("StffManageController.addUser()");
 		System.out.println("USER="+user);
 		System.out.println("user.getDomicile()="+user.getDomicile());
-		String state = userServer.addUser(user);
-		System.out.println("state==="+state);
-		return new JsonResult(state);
+		Integer i  = userServer.addUser(user);
+        if(i == 1) {
+            return new JsonResult();
+        }
+        throw new ServiceException("修改失败");
 	}
 	@ResponseBody
 	@RequestMapping("editUser")
@@ -75,18 +79,28 @@ public class StffManageController {
 		System.out.println("StffManageController.editUser()");
 		System.out.println("USER="+user);
 		System.out.println("user.getDomicile()="+user.getDomicile());
-		String state = userServer.editUser(user);
-		System.out.println("state==="+state);
-		return new JsonResult(state);
+		Integer i  = userServer.editUser(user);
+        if(i == 1) {
+            return new JsonResult();
+        }
+        throw new ServiceException("修改失败");
 	}
 	
 	@ResponseBody
 	@RequestMapping("deleteUser")
 	public JsonResult deleteUser(String pk_id) {
 		System.out.println("id==="+pk_id);
-		String state = userServer.deleteUser(pk_id);
-		System.out.println("state==="+state);
-		return new JsonResult(state);
+		Integer i = userServer.deleteUser(pk_id);
+        if(i != 0) {
+            return new JsonResult();
+        }
+        throw new ServiceException("删除失败");
 	}
+	@ResponseBody
+    @RequestMapping("selectUserExcel")
+    public JsonResult selectUserExcel(HttpServletRequest request,HttpServletResponse response) {
+	    String fileName = userServer.selectUserExcel("D:\\Java\\eclipse-workspace\\yhmp1.0\\src\\main\\webapp\\excle\\");
+        return new JsonResult(list);
+    }
 	
 }

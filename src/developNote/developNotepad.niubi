@@ -1,6 +1,2 @@
-
-项目申报交接表内{
-	合同签订情况:  1为已签订   2为未签订,
-	项目质量要求：     1为优秀       2为良好       3为合格,  
-	是否需要招投标：1为需要     2为不需要     3为暂不确定
-}
+/yhmp1.0/src/main/java/com/yhmp/system/controller/StffManageController.java
+102行有路径，部署时需修改

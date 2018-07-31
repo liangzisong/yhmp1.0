@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yhmp.common.exception.ServiceException;
 import com.yhmp.common.web.JsonResult;
 import com.yhmp.system.entity.User;
 import com.yhmp.system.service.UserServer;
@@ -49,8 +50,11 @@ public class PersonalConntroller {
 		User user = new User();
 		user.setPk_id(Integer.valueOf(id));
 		user.setUsername(username);
-		String state = userServer.updateUser(user);
-		return new JsonResult(state);
+		Integer i = userServer.updateUser(user);
+        if(i == 1) {
+            return new JsonResult();
+        }
+        throw new ServiceException("修改失败");
 	}
 	/**
 	 * 修改密码
@@ -74,7 +78,10 @@ public class PersonalConntroller {
 			return new JsonResult("原密码错误");
 		}
 		user.setPassword(newPassword);
-		String state = userServer.updateUser(user);
-		return new JsonResult(state);
+		Integer i = userServer.updateUser(user);
+        if(i == 1) {
+            return new JsonResult();
+        }
+        throw new ServiceException("修改失败");
 	}
 }

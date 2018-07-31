@@ -11,8 +11,9 @@ import com.yhmp.system.entity.User;
 public interface UserServer {
 
 	List<User> selectUser(User user);
-	String updateUser(User user);
-	String addUser(User user);
-	String editUser(User user);
-	String deleteUser(String id);
+	Integer updateUser(User user);
+	Integer addUser(User user);
+	Integer editUser(User user);
+	Integer deleteUser(String id);
+	String selectUserExcel(String url);
 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yhmp.common.exception.ServiceException;
 import com.yhmp.common.web.JsonResult;
 import com.yhmp.system.entity.User;
 import com.yhmp.system.service.UserServer;
@@ -24,8 +25,11 @@ public class AuthorityManageController {
 	@RequestMapping("saveAuthority")
 	public JsonResult saveAuthority(User user) {
 		System.out.println(user);
-		String state = userServer.editUser(user);
+		Integer i = userServer.editUser(user);
 		System.out.println("保存权限");
-		return new JsonResult(state);
+        if(i == 1) {
+            return new JsonResult();
+        }
+        throw new ServiceException("修改失败");
 	}
 }

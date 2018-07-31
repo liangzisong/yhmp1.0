@@ -423,7 +423,7 @@ function saveUser(){
 //	console.log(params);
 	$.post(url,params,function(result){
 		//console.log(result);
-		alert(result.data);
+		alert(result.message);
 		//查看所有人员
 		selectUserAll();
 	});
@@ -446,7 +446,7 @@ function saveAuthority(){
 	}
 	$.post(url,params,function(result){
 		selectUserAll();
-		alert(result.data);
+		alert(result.message);
 	});
 	//console.log(zTreeOnClick());
 	
@@ -466,7 +466,7 @@ function deleteUser(){
 	console.log("userId.id="+params.pk_id);
 	$.post(url,params,function(result){
 		selectUserAll();
-		alert(result.data);
+		alert(result.message);
 	});
 }
 function getUser(){

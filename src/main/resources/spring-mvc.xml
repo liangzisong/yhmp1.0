@@ -27,7 +27,7 @@
      -->
     <context:component-scan base-package="com.yhmp" />
     <!-- <aop:aspectj-autoproxy/> -->
-    
+    <!-- 扫描aop注解 -->
 	<aop:aspectj-autoproxy/>
     
 	<!-- <aop:config>
