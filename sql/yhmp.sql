@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50560
 File Encoding         : 65001
 
-Date: 2018-07-30 13:06:57
+Date: 2018-07-31 16:33:13
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,11 +31,13 @@ CREATE TABLE `plan` (
   `personLiable` varchar(255) DEFAULT NULL COMMENT '项目成员',
   PRIMARY KEY (`pk_id`) USING BTREE,
   KEY `projectPlan` (`projectPlan`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=198 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=200 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of plan
 -- ----------------------------
+INSERT INTO `plan` VALUES ('198', '21', '0', '33', 'test3', '1', '未填写', '2018-7-30', '111');
+INSERT INTO `plan` VALUES ('199', '20', '0', '22', 'test2', '1', '未填写', '2018-7-30', '未填写');
 
 -- ----------------------------
 -- Table structure for `project`
@@ -63,16 +65,16 @@ CREATE TABLE `project` (
   `all_planSchedule` int(5) DEFAULT '0' COMMENT '项目总进度',
   `if_preservation` int(10) DEFAULT '0' COMMENT '是否已经提交归档：1为提交，0为未提交',
   PRIMARY KEY (`pk_id`) USING BTREE,
-  KEY `user_name` (`responsibilityName`),
-  CONSTRAINT `user_name` FOREIGN KEY (`responsibilityName`) REFERENCES `user` (`username`)
+  KEY `user_name` (`responsibilityName`) USING BTREE,
+  CONSTRAINT `user_name` FOREIGN KEY (`responsibilityName`) REFERENCES `user` (`username`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of project
 -- ----------------------------
-INSERT INTO `project` VALUES ('19', '11', '11', '11', '11', '11', '11', '11', '11', '0', '11', '11', '11', '2018-07-07', '3', '2', 'test1', '111', '0', '0');
-INSERT INTO `project` VALUES ('20', '22', '22', '22', '22', '22', '22', '22', '22', '0', '22', '22', '22', '2018-07-16', '3', '2', 'test2', '22', '0', '0');
-INSERT INTO `project` VALUES ('21', '33', '33', '33', '334', '33', '33', '33', '33', '0', '33', '33', '33', '2018-07-14', '3', '1', 'test3', '33', '0', '0');
+INSERT INTO `project` VALUES ('19', '11', '11', '11', '11', '11', '11', '11', '11', '0', '11', '11', '11', '2018-07-07', '3', '2', '我叫略略略', '111', '0', '0');
+INSERT INTO `project` VALUES ('20', '22', '22', '22', '22', '22', '22', '22', '22', '0', '22', '22', '22', '2018-07-16', '3', '2', 'test2', '22', '100', '1');
+INSERT INTO `project` VALUES ('21', '33', '33', '33', '334', '33', '33', '33', '33', '0', '33', '33', '33', '2018-07-14', '3', '1', 'test3', '33', '100', '1');
 
 -- ----------------------------
 -- Table structure for `project_preservation`
@@ -100,11 +102,13 @@ CREATE TABLE `project_preservation` (
   PRIMARY KEY (`pk_id`) USING BTREE,
   KEY `project_id` (`fk_project_id`) USING BTREE,
   CONSTRAINT `project_preservation_ibfk_1` FOREIGN KEY (`fk_project_id`) REFERENCES `project` (`pk_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of project_preservation
 -- ----------------------------
+INSERT INTO `project_preservation` VALUES ('10', '21', '33', '111', '222', '333', null, null, null, '报告,预算书', '0', '1', '444', '555', null, '2018-07-20', '777', '666');
+INSERT INTO `project_preservation` VALUES ('11', '20', '22', '111', '222', '12341234', null, null, null, '报告', '1', '1', '444', '23452345', null, '2018-07-13', '777', '2345');
 
 -- ----------------------------
 -- Table structure for `project_summary`
@@ -117,10 +121,10 @@ CREATE TABLE `project_summary` (
   `technicalSummary` varchar(255) DEFAULT NULL,
   `experience` varchar(255) DEFAULT NULL,
   `otherSummary` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`pk_id`),
-  KEY `id` (`fk_project_id`),
+  PRIMARY KEY (`pk_id`) USING BTREE,
+  KEY `id` (`fk_project_id`) USING BTREE,
   CONSTRAINT `id` FOREIGN KEY (`fk_project_id`) REFERENCES `project` (`pk_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of project_summary
@@ -142,11 +146,13 @@ CREATE TABLE `true_plan` (
   KEY `projectPlan` (`projectPlan`) USING BTREE,
   KEY `fk_id` (`fk_project_id`) USING BTREE,
   CONSTRAINT `fk_id` FOREIGN KEY (`fk_project_id`) REFERENCES `project` (`pk_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=162 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=164 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of true_plan
 -- ----------------------------
+INSERT INTO `true_plan` VALUES ('162', '21', '0', '1', '未填写', '2018-7-30', '未填写');
+INSERT INTO `true_plan` VALUES ('163', '20', '0', '1', '未填写', '2018-7-30', '未填写');
 
 -- ----------------------------
 -- Table structure for `user`
@@ -165,19 +171,19 @@ CREATE TABLE `user` (
   `sex` int(2) DEFAULT NULL,
   `age` varchar(100) DEFAULT NULL,
   `authority` varchar(255) DEFAULT '0' COMMENT '用户权限',
+  `jobAge` int(90) DEFAULT '0' COMMENT '工龄',
   PRIMARY KEY (`pk_id`) USING BTREE,
-  KEY `username` (`username`)
+  KEY `username` (`username`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('-1', 'admin', 'admin', '管理员', '1', '2018-04-09', '1122334455', '0', '山东省', '1', '18', '0,1,2,21,22,23,24,4,41,42,43,44,6,61,62,63,64,65,7');
-INSERT INTO `user` VALUES ('17', 'test1', '000000', '测绘师', '一部', '2018-07-21', '18855585855', '0', '山东', '1', '25', '0,1');
-INSERT INTO `user` VALUES ('18', 'test2', '000000', '测绘师', '一部', '2018-07-21', '18855585855', '0', '山东', '1', '25', '0');
-INSERT INTO `user` VALUES ('19', 'test3', '000000', '测绘师', '一部', '2018-07-21', '18855585855', '0', '山东', '1', '25', '0');
-INSERT INTO `user` VALUES ('20', 'test3', '000000', '测绘师', '一部', '2018-07-21', '18855585855', '0', '山东', '1', '25', '0');
-INSERT INTO `user` VALUES ('21', 'test4', '000000', '11', '111', '', '11', '0', '111', '1', '11', '0');
+INSERT INTO `user` VALUES ('-1', 'admin', 'admin', '管理员', '1', '2018-04-09', '1122334455', '0', '山东省', '1', '18', '0,1,2,21,22,23,24,4,41,42,43,44,6,61,62,63,64,65,7', null);
+INSERT INTO `user` VALUES ('17', '我叫略略略', '000000', '测绘师', '一部', '2018-07-21', '18855585855', '0', '山东', '1', '25', '0,1,2,23', null);
+INSERT INTO `user` VALUES ('18', 'test2', '000000', '测绘师', '一部', '2018-07-21', '18855585855', '0', '山东', '1', '25', '0', null);
+INSERT INTO `user` VALUES ('19', 'test3', '000000', '测绘师', '一部', '2018-07-21', '18855585855', '0', '山东', '1', '25', '0', null);
+INSERT INTO `user` VALUES ('20', 'test3', '000000', '测绘师', '一部', '2018-07-21', '18855585855', '0', '山东', '1', '25', '0', null);
 
 -- ----------------------------
 -- Table structure for `user_logs`
@@ -190,10 +196,10 @@ CREATE TABLE `user_logs` (
   `method` varchar(255) DEFAULT NULL,
   `state` int(255) DEFAULT NULL,
   `operate_date` datetime DEFAULT NULL,
-  PRIMARY KEY (`pk_id`),
-  KEY `fk_user_id` (`fk_user_id`),
+  PRIMARY KEY (`pk_id`) USING BTREE,
+  KEY `fk_user_id` (`fk_user_id`) USING BTREE,
   CONSTRAINT `fk_user_id` FOREIGN KEY (`fk_user_id`) REFERENCES `user` (`pk_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of user_logs
@@ -203,7 +209,7 @@ CREATE TABLE `user_logs` (
 -- View structure for `select_all_preservation_project`
 -- ----------------------------
 DROP VIEW IF EXISTS `select_all_preservation_project`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `select_all_preservation_project` AS select `project`.`pk_id` AS `pk_id`,`project`.`declareProject` AS `declareProject`,`project`.`declareNumber` AS `declareNumber`,`project`.`declareScale` AS `declareScale`,`project`.`finishTime` AS `finishTime`,`project_preservation`.`preservation_date` AS `preservation_date`,`project_preservation`.`remarks` AS `remarks`,`project_preservation`.`achievement_type` AS `achievement_type`,`project`.`contract` AS `contract`,`project`.`if_preservation` AS `if_preservation` from (`project` join `project_preservation` on((`project_preservation`.`fk_project_id` = `project`.`pk_id`))) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `select_all_preservation_project` AS select `project`.`pk_id` AS `pk_id`,`project`.`declareProject` AS `declareProject`,`project`.`declareNumber` AS `declareNumber`,`project`.`declareScale` AS `declareScale`,`project`.`finishTime` AS `finishTime`,`project_preservation`.`preservation_date` AS `preservation_date`,`project_preservation`.`remarks` AS `remarks`,`project_preservation`.`achievement_type` AS `achievement_type`,`project`.`contract` AS `contract`,`project`.`if_preservation` AS `if_preservation`,`project`.`responsibilityName` AS `responsibilityName` from (`project` join `project_preservation` on((`project_preservation`.`fk_project_id` = `project`.`pk_id`))) ;
 DROP TRIGGER IF EXISTS `update_preservation`;
 DELIMITER ;;
 CREATE TRIGGER `update_preservation` AFTER INSERT ON `project_preservation` FOR EACH ROW UPDATE project 
