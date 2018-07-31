@@ -44,6 +44,12 @@ $(document).ready(function(){
 	//$("#").hide();$("#").hide();$("#").hide();$("#").hide();$("#").hide();$("#").hide();$("#").hide();$("#").hide();$("#").hide();$("#").hide();$("#").hide();$("#").hide();
 	$.post(url,params,function(result){
 		console.log(JSON.stringify(result.data));
+		debugger
+		console.log(result.data.username);
+		$("#daoshanjiao").before(result.data.username);
+		$("#iInformation").attr("userid",result.data.pk_id);
+		$("#iInformation").attr("username",result.data.username);
+	
 		var authority = result.data.authority;
 		authorityArray = authority.split(",");
 		debugger
@@ -86,10 +92,6 @@ $(document).ready(function(){
 			}
 		}
 	});
-	$("#daoshanjiao").before(theRequest.username);
-	$("#iInformation").attr("userid",theRequest.user_id);
-	$("#iInformation").attr("username",theRequest.username);
-
 });
 //项目管理
 //项目查看

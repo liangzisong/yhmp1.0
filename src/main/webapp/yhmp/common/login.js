@@ -47,7 +47,7 @@ $(document).keyup(function (e) {//捕获文档对象的按键弹起事件
 				console.log(result.data);	
 				window.location.href="http://localhost:8080/yhmp1.0/indexUI.oo" +
 						"?date="+new Date().getTime()
-						+"&username="+result.data.username
+						+"&username="+encodeURI(result.data.username)
 						+"&user_id="+result.data.pk_id;
 				//post请求
 				/*httpPost("http://localhost:8080/yhmp1.0/indexUI.oo", params_index);*/

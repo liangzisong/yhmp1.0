@@ -19,7 +19,7 @@ public class TestExcel/* extends TestBean*/ {
       //创建HSSFWorkbook对象
         HSSFWorkbook wb = new HSSFWorkbook();
         //创建HSSFSheet对象
-        HSSFSheet sheet = wb.createSheet("sheet0");
+        HSSFSheet sheet = wb.createSheet("所有人员信息");
         
         //创建HSSFRow对象       行
         HSSFRow row = sheet.createRow(0);
