@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhmp.system.dao.UserDao">
+	<select id="selectUser" parameterType="com.yhmp.system.entity.User" resultType="com.yhmp.system.entity.User">
+		select pk_id,username,password,job,department,hiredate,phone,status,domicile,sex,age,authority 
+		from user 
+		<if test="username != null and password==null">
+			where username LIKE CONCAT("%",#{username},"%") 
+		</if>
+		<if test="job != '' and job != null">
+			where job LIKE CONCAT("%",#{job},"%") 
+		</if>
+		<if test="department != '' and department != null">
+			where department LIKE CONCAT("%",#{department},"%") 
+		</if>
+		<if test="username != null and password != null">
+		where username = #{username} and password = #{password}
+		</if>
+		<if test="pk_id != null">
+		where pk_id = #{pk_id}
+		</if>
+	</select>
+	<update id="updateUser" parameterType="com.yhmp.system.entity.User" >
+		<if test="username !=null and username!='' ">
+			update user set username = #{username}
+		</if>
+		<if test="password != null and password!='' ">
+			update user set password = #{password}
+		</if>
+		 where pk_id = #{pk_id}
+	</update>
+	<insert id="addUser" parameterType="com.yhmp.system.entity.User" >
+		INSERT INTO user (username,job,department,hiredate,phone,status,domicile,sex,age) 
+		VALUES (#{username},#{job},#{department},#{hiredate},#{phone},#{status},#{domicile},#{sex},#{age})
+	</insert>
+	<update id="editUser" parameterType="com.yhmp.system.entity.User" >
+		UPDATE user SET 
+		<if test="pk_id != null and authority != null">
+			authority=#{authority} 
+			where pk_id=#{pk_id} 
+		</if>
+		<if test="pk_id != null and authority == null ">
+			username=#{username}
+			,job=#{job}
+			,department=#{department}
+			,hiredate=#{hiredate}
+			,phone=#{phone}
+			,status=#{status}
+			,domicile=#{domicile}
+			,sex=#{sex}
+			,age=#{age} 
+			WHERE 
+			pk_id=#{pk_id}			
+		</if>
+
+	</update>
+	<delete id="deleteUser" parameterType="int" >
+		delete from user where pk_id=#{pk_id}
+	</delete>
+</mapper>

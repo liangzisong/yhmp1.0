@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhmp.project.dao.ProjectSummaryDao">
+	    <insert id="addProjectSummary" parameterType="com.yhmp.project.entity.ProjectSummary" >
+	       INSERT INTO project_summary (fk_project_id
+	       ,reviewSuggestion
+	       ,technicalSummary
+	       ,experience
+	       ,otherSummary
+	       ) VALUES (#{fk_project_id}
+	       ,#{reviewSuggestion}
+	       ,#{technicalSummary}
+	       ,#{experience}
+	       ,#{otherSummary}) 
+	    </insert>
+		<update id="updateProjectSummary" parameterType="com.yhmp.project.entity.ProjectSummary" >
+			UPDATE project_summary SET 
+			reviewSuggestion=#{reviewSuggestion},
+			technicalSummary=#{technicalSummary},
+			experience=#{experience},
+			otherSummary=#{otherSummary}  
+			WHERE fk_project_id = #{fk_project_id}
+		</update>
+		<select id="selectProjectSummary" parameterType="com.yhmp.project.entity.ProjectSummary" resultType="com.yhmp.project.entity.ProjectSummary" >
+			SELECT reviewSuggestion,technicalSummary,experience,otherSummary  
+			FROM project_summary   
+			WHERE fk_project_id = #{fk_project_id}  
+		</select>
+</mapper>

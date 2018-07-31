@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhmp.project.dao.InformationDao">
+	    <select id="selectProjectInformation" parameterType="com.yhmp.project.entity.PorjectDeclare" resultType="com.yhmp.project.entity.PorjectDeclare" >
+	    	SELECT pk_id,declareProject,declareNumber,declareFraction,declareScale,declareArrange,declareAssess,declareSurveying,declarePlan,contract,declareCompany,declareName,declarePhone,finishTime,quality,bid,responsibilityName,responsibilityPhone,all_planSchedule 
+	    	FROM project
+	    	WHERE if_preservation ='0' 
+	    	<if test="pk_id != null and pk_id!=''" >
+	    		and pk_id=#{pk_id} 
+	    	</if>
+	    	<if test="declareProject !=null and declareProject !=''" >
+	    		and declareProject LIKE CONCAT("%",#{declareProject},"%") 
+	    	</if>
+	    	<if test="responsibilityName !=null and responsibilityName !=''" >
+                and responsibilityName LIKE CONCAT("%",#{responsibilityName},"%") 
+            </if>
+            <if test="declareScale !=null and declareScale !=''" >
+                and declareScale LIKE CONCAT("%",#{declareScale},"%") 
+            </if>
+	    </select>
+		<update id="editProject" parameterType="com.yhmp.project.entity.PorjectDeclare" >
+			UPDATE project SET 
+			declareProject=#{declareProject},
+			declareNumber=#{declareNumber},
+			declareFraction=#{declareFraction},
+			declareScale=#{declareScale},
+			declareArrange=#{declareArrange},
+			declareAssess=#{declareAssess},
+			declareSurveying=#{declareSurveying},
+			declarePlan=#{declarePlan},
+			contract=#{contract},
+			declareCompany=#{declareCompany},
+			declareName=#{declareName},
+			declarePhone=#{declarePhone},
+			finishTime=#{finishTime},
+			quality=#{quality},
+			bid=#{bid},
+			responsibilityName=#{responsibilityName},
+			responsibilityPhone= #{responsibilityPhone}
+			WHERE pk_id=#{pk_id}
+		</update>
+	    <delete id="deleteProject" parameterType="com.yhmp.project.entity.PorjectDeclare" >
+	    	DELETE FROM project WHERE pk_id=#{pk_id}
+	    </delete>
+	<update id="updateAllplanSchedule" parameterType="com.yhmp.project.entity.PorjectDeclare" >
+			update project set all_planSchedule = #{all_planSchedule}
+			where pk_id = #{pk_id}
+	</update>
+	<!-- 查询单个已完成项目 -->
+		    <select id="selectOneProjectInfo" parameterType="com.yhmp.project.entity.PorjectDeclare" resultType="com.yhmp.project.entity.PorjectDeclare" >
+	    	SELECT pk_id,declareProject,declareNumber,declareFraction,declareScale,declareArrange,declareAssess,declareSurveying,declarePlan,contract,declareCompany,declareName,declarePhone,finishTime,quality,bid,responsibilityName,responsibilityPhone,all_planSchedule 
+	    	FROM project
+	    	WHERE if_preservation ='1' 
+	    	<if test="pk_id != null and pk_id!=''" >
+	    		and pk_id=#{pk_id} 
+	    	</if>
+	    </select>
+</mapper>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhmp.project.dao.ProjectPreservationIngDao">
+	<insert id="saveProjectPreservation" 
+	parameterType="com.yhmp.project.entity.ProjectPreservation" >
+		INSERT INTO project_preservation (fk_project_id,
+		project_name,
+		collect_data,
+		field_work,
+		review_data,
+		achievement_type,
+		if_auditing,
+		project_agreement,
+		project_number,
+		other_data,
+		preservation_date,
+		sendee,
+		remarks)
+		VALUES(#{projectId},
+		#{projectName},
+		#{collectData},
+		#{fieldWork},
+		#{reviewData},
+		#{achievementType},
+		#{ifAuditing},
+		#{projectAgreement},
+		#{projectNumber},
+		#{otherData},
+		#{preservationDate},
+		#{sendee},
+		#{remarks} 
+		)
+	</insert>
+    
+        <select id="selectPreservation" resultType="com.yhmp.project.entity.ProjectPreservation" parameterType="com.yhmp.project.entity.ProjectPreservation" >
+        SELECT pk_id AS projectId
+        ,project_name AS projectName
+        ,collect_data AS collectData
+        ,field_work AS fieldWork
+        ,review_data AS reviewData
+        ,achievement_type AS achievementType
+        ,if_auditing AS ifAuditing
+        ,project_agreement AS projectAgreement
+        ,project_number AS projectNumber
+        ,other_data AS otherData
+        ,preservation_date AS preservationDate
+        ,sendee
+        ,remarks   
+        FROM project_preservation    
+        WHERE  fk_project_id = #{projectId}  
+    </select>
+    
+</mapper>

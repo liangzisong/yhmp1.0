@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhmp.project.dao.PreservationProjecDao">
+
+	<select id="selectPreservationProject" resultType="com.yhmp.project.entity.PreservationProjectVO" >
+		SELECT pk_id,declareProject,declareNumber,declareScale,finishTime,preservation_date,remarks,achievement_type,contract,responsibilityName   
+		FROM select_all_preservation_project   
+		WHERE  if_preservation ='1'  
+		<if test="declareProject != null and declareProject !=''">
+		  AND declareProject LIKE CONCAT("%",#{declareProject},"%")  
+		</if>
+		<if test="responsibilityName !=null and responsibilityName !=''" >
+            and responsibilityName LIKE CONCAT("%",#{responsibilityName},"%") 
+        </if>
+        <if test="declareScale !=null and declareScale !=''" >
+            and declareScale LIKE CONCAT("%",#{declareScale},"%") 
+        </if>
+	</select>
+	
+	
+</mapper>

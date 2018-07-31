@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhmp.project.dao.PlanDao">
+	<insert id="addPrjectPlan" parameterType="java.util.List" >
+		<!-- INSERT INTO plan (id,declareProject,responsibilityName,projectPlan,projectContent,finishTime,personLiable) 
+		VALUES  -->
+		<!-- 需要优化 -->
+		<foreach item="item" index="index" collection="list" separator=";" >
+			INSERT INTO plan (fk_project_id,planSchedule,declareProject,responsibilityName,projectPlan,projectContent,finishTime,personLiable) 
+			VALUES (
+			#{item.fk_project_id},
+			#{item.planSchedule},
+			#{item.declareProject},
+			#{item.responsibilityName},
+			#{item.projectPlan},
+			#{item.projectContent},
+			#{item.finishTime},
+			#{item.personLiable}
+			)
+		</foreach>
+	</insert>
+	<select id="selectPrjectPlan" parameterType="com.yhmp.project.entity.ProjectPlan" resultType="com.yhmp.project.entity.ProjectPlan" >
+		SELECT fk_project_id,planSchedule,declareProject,responsibilityName,projectPlan,projectContent,finishTime,personLiable   
+		FROM plan   
+		WHERE fk_project_id=#{fk_project_id}
+	</select>
+	<delete id="deletePrjectPlan" parameterType="com.yhmp.project.entity.ProjectPlan" >
+		DELETE 
+		FROM plan 
+		WHERE fk_project_id=#{fk_project_id}
+	</delete>
+	
+	<!-- 实际进度 -->
+	<insert id="addTruePrjectPlan" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="list" separator=";" >
+			INSERT INTO true_plan (fk_project_id,planSchedule,projectPlan,projectContent,finishTime,timeAdjustment) 
+			VALUES (
+			#{item.fk_project_id},
+			#{item.planSchedule},
+			#{item.projectPlan},
+			#{item.projectContent},
+			#{item.finishTime},
+			#{item.timeAdjustment}
+			)
+		</foreach>
+	</insert>
+	<select id="selectTruePrjectPlan" parameterType="com.yhmp.project.entity.ProjectPlan" resultType="com.yhmp.project.entity.ProjectPlan" >
+		SELECT fk_project_id,planSchedule,projectPlan,projectContent,finishTime,timeAdjustment   
+		FROM true_plan   
+		<if test="fk_project_id != null and fk_project_id != ''" >
+			WHERE fk_project_id=#{fk_project_id}
+		</if>
+		<if test="pk_id != null and pk_id != ''" >
+			WHERE fk_project_id=#{pk_id}
+		</if>
+	</select>
+	<delete id="deleteTruePrjectPlan" parameterType="com.yhmp.project.entity.ProjectPlan" >
+		DELETE 
+		FROM true_plan 
+		WHERE fk_project_id=#{fk_project_id}
+	</delete>
+	
+</mapper>
