@@ -14,6 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yhmp.common.web.JsonResult;
+/**
+ * 这个项目浪费了我一个周末的时间
+ * @author Liang
+ *
+ */
 @Controller
 public class IndexController {
 

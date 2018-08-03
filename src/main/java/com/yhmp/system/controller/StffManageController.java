@@ -100,7 +100,8 @@ public class StffManageController {
     @RequestMapping("selectUserExcel")
     public JsonResult selectUserExcel(HttpServletRequest request,HttpServletResponse response) {
 	    String fileName = userServer.selectUserExcel("D:\\Java\\eclipse-workspace\\yhmp1.0\\src\\main\\webapp\\excle\\");
-        return new JsonResult(list);
+	    //TODO 未完成
+        return new JsonResult(null);
     }
 	
 }
